@@ -1,0 +1,11 @@
+tqdm
+gpustat
+torch
+torchvision
+diffusers
+datasets
+accelerate
+transformers
+timm
+torchdiffeq
+git+https://github.com/LTH14/torch-fidelity.git@master#egg=torch-fidelity
