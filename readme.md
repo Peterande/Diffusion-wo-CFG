@@ -32,20 +32,13 @@ You can adjust `nnodes` and `nproc_per_node` according to your environment. Howe
 
 ### 3. Training
 
-We list the hyper-paremeters for the final SiT-XL/2 model in our paper in `train.py` as defaults. Through the following command your can train your own models
+We list the hyper-paremeters for the final SiT-XL/2 model in our paper as the defaults of `train.py`. Through the following command your can train your own models
 
 ```bash
 torchrun --nnodes=2 --nproc_per_node=8 train.py
+# Or using REPA checkpoints as initialization. This does not affect final performances.
+# torchrun --nnodes=2 --nproc_per_node=8 train.py --ckpt-path output/SiT-XL-2-REPA.pt
 ```
-
-To accelerate convergence, you can also load checkpoints from [SiT](https://github.com/willisma/SiT) or [REPA](https://github.com/sihyun-yu/REPA) with
-
-```bash
-torchrun --nnodes=2 --nproc_per_node=8 train.py --ckpt-path output/SiT-XL-2-ORIG.pt
-torchrun --nnodes=2 --nproc_per_node=8 train.py --ckpt-path output/SiT-XL-2-REPA.pt
-```
-
-Note that this only serves as weight initialization and does not affect final performances.
 
 ## Acknowledgement
 
