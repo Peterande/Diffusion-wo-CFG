@@ -42,6 +42,7 @@ def setup_ddp(args):
 
 def get_dataset(args, world_size):
     import torchvision.transforms.v2 as v2
+    import PIL, io
     transforms = torchvision.transforms.Compose([
         v2.RGB(),
         v2.Resize(args.image_size),
@@ -52,7 +53,7 @@ def get_dataset(args, world_size):
         v2.Normalize([0.5], [0.5]),
     ])
     def map_fn(item):
-        item['image'] = transforms(item['image'])
+        item['image'] = transforms(PIL.Image.open(io.BytesIO(item['image']['bytes'])))
         return item
     dataset_train = datasets.load_dataset(
         'ILSVRC/imagenet-1k',
