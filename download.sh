@@ -23,13 +23,3 @@ wget https://github.com/tzco/diffusion-wo-cfg/releases/download/1.0/SiT-XL-2-REP
 
 cat SiT-XL-2-REPA-* > SiT-XL-2-REPA.pt
 rm SiT-XL-2-REPA-*
-
-wget https://github.com/tzco/diffusion-wo-cfg/releases/download/1.0/SiT-XL-2-ORIG-a
-wget https://github.com/tzco/diffusion-wo-cfg/releases/download/1.0/SiT-XL-2-ORIG-b
-wget https://github.com/tzco/diffusion-wo-cfg/releases/download/1.0/SiT-XL-2-ORIG-c
-wget https://github.com/tzco/diffusion-wo-cfg/releases/download/1.0/SiT-XL-2-ORIG-d
-wget https://github.com/tzco/diffusion-wo-cfg/releases/download/1.0/SiT-XL-2-ORIG-e
-wget https://github.com/tzco/diffusion-wo-cfg/releases/download/1.0/SiT-XL-2-ORIG-f
-
-cat SiT-XL-2-ORIG-* > SiT-XL-2-ORIG.pt
-rm SiT-XL-2-ORIG-*
