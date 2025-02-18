@@ -1,4 +1,6 @@
-# Diffusion Models Without Classifier-free Guidance
+[![arXiv](https://img.shields.io/badge/arXiv-2502.12154-b31b1b.svg)](https://arxiv.org/abs/2502.12154)
+
+# Diffusion Models without Classifier-free Guidance
 
 Zhicong Tang $^1$, Jianmin Bao $^2$, Dong Chen $^2$, Baining Guo $^2$
 
@@ -38,6 +40,19 @@ We list the hyper-paremeters for the final SiT-XL/2 model in our paper as the de
 torchrun --nnodes=2 --nproc_per_node=8 train.py
 # Or using REPA checkpoints as initialization. This does not affect final performances.
 # torchrun --nnodes=2 --nproc_per_node=8 train.py --ckpt-path output/SiT-XL-2-REPA.pt
+```
+
+## Citation
+
+If you find our work useful, please kindly consider to cite us
+
+```bibtex
+@article{tang2025diffusion,
+      title={Diffusion Models without Classifier-free Guidance}, 
+      author={Zhicong Tang and Jianmin Bao and Dong Chen and Baining Guo},
+      journal={arXiv preprint arXiv:2502.12154},
+      year={2025}
+}
 ```
 
 ## Acknowledgement
