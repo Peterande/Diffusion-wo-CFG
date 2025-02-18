@@ -40,7 +40,7 @@ def setup_ddp(args):
     print(f'Starting global rank {global_rank}, node rank {node_rank}, local rank {local_rank}, seed {seed}, world_size {world_size}; Connecting to {master_addr}:{master_port}.')
     return device, global_rank, local_rank, world_size, node_rank, master_addr, master_port, seed
 
-def get_dataset(args, world_size):
+def get_dataset(args, world_size, seed):
     import torchvision.transforms.v2 as v2
     import PIL, io
     transforms = torchvision.transforms.Compose([
@@ -61,15 +61,15 @@ def get_dataset(args, world_size):
         trust_remote_code=True
     )
     loader_len = len(dataset_train) // args.global_batch_size
-    dataset_train = dataset_train.to_iterable_dataset(num_shards=world_size*args.num_workers).map(map_fn)
+    dataset_train = dataset_train.to_iterable_dataset(num_shards=world_size*args.num_workers).shuffle(seed=seed, buffer_size=2**13).map(map_fn)
     loader_train = torch.utils.data.DataLoader(
         dataset_train,
         batch_size=args.global_batch_size // world_size,
         num_workers=args.num_workers,
         pin_memory=True,
-        drop_last=False,
+        drop_last=True,
     )
-    return loader_train, loader_len
+    return loader_train, dataset_train, loader_len
 
 def save_ckpt(args, model, ema, opt, epoch, step, checkpoint_dir, global_rank):
     if global_rank == 0:
@@ -290,7 +290,7 @@ def main(args):
 
     log('args:\n' + '\n'.join([f'\t{arg}: {getattr(args, arg)}' for arg in vars(args)]))
 
-    loader, loader_len = get_dataset(args, world_size)
+    loader, dataset, loader_len = get_dataset(args, world_size, seed)
     log(f"Dataset loaded")
 
     vae = diffusers.models.AutoencoderKL.from_pretrained(f"stabilityai/sd-vae-ft-{args.vae}").to(device)
@@ -324,6 +324,7 @@ def main(args):
 
     epoch, train_steps, log_steps, running_loss, start_time = start_epoch, start_step, 0, 0, time.time()
 
+    dataset.set_epoch(epoch)
     log(f"Training for {args.epochs} epochs...")
     for data in loader:
 
@@ -340,6 +341,7 @@ def main(args):
             epoch += 1
             if epoch > args.epochs:
                 break
+            dataset.set_epoch(epoch)
             log(f"Beginning epoch {epoch}...")
 
         x, y = encode_image(data['image'].to(device), vae), data['label'].to(device)
