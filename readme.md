@@ -1,3 +1,4 @@
+[![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/diffusion-models-without-classifier-free/image-generation-on-imagenet-256x256)](https://paperswithcode.com/sota/image-generation-on-imagenet-256x256?p=diffusion-models-without-classifier-free) \
 [![arXiv](https://img.shields.io/badge/arXiv-2502.12154-b31b1b.svg)](https://arxiv.org/abs/2502.12154)
 
 # Diffusion Models without Classifier-free Guidance
