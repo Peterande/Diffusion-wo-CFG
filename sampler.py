@@ -123,7 +123,7 @@ def euler_maruyama_sampler(
 
     _dtype = latents.dtype
 
-    t_steps = torch.linspace(1., 0.04, num_steps, dtype=torch.float64)
+    t_steps = torch.linspace(1., 0.004, num_steps, dtype=torch.float64)
     t_steps = torch.cat([t_steps, torch.tensor([0.], dtype=torch.float64)])
     x_next = latents.to(torch.float64)
     device = x_next.device
